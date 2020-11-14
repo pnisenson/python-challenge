@@ -16,8 +16,8 @@ with open(csvfile) as budgfile:
 	mo_count = 0
 # average change is:
 	# (last month revenue - first month revenue)/(mos - 1)
-	change = 0
-	first_mo = 0
+	
+	
 	new_list = []
 	for row in budgfile:
 		# loops through second column in CSV and adds each amount
@@ -27,8 +27,11 @@ with open(csvfile) as budgfile:
 			mo_count = mo_count + 1
 		else: break
 		new_list.append(row[1])
-	print(int(new_list[0]))
-	print(int(new_list[mo_count-1]))
+	# average change is:
+	# (last month revenue - first month revenue)/(mos - 1)
+	first_mo = int(new_list[0])
+	last_mo = int(new_list[mo_count-1])
+	avg_change = ((last_mo - first_mo)/(mo_count-1))
 
 	# for x in budgfile:
 	# 	if x[1] != "":
@@ -41,6 +44,7 @@ with open(csvfile) as budgfile:
 
 	
 	print("Financial Analysis")
+	print("----------------------")
 	print(f'Total Months: {mo_count}')
-	print(f'Total: {tot_prof}')
-	#print(f'Average Change: {change/(mo_count - 1)}')
+	print(f'Total: ${tot_prof}')
+	print(f'Average Change: ${avg_change}')
