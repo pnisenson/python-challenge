@@ -73,3 +73,25 @@ with open(csvfile) as budgfile:
 	print(f'Average Change: ${round(avg_change, 2)}')
 	print(f'Greatest Increase: {maxdate} (${max(mthly_change)})')
 	print(f'Greatest Decrease: {mindate} (${min(mthly_change)})')
+
+# create list of outputs to write to file
+stats = ['Total Months','Total Profits/Losses','Average Change','Greatest Increase','Greatest Decrease']
+solutions = [mo_count, tot_prof, round(avg_change,2), max(mthly_change), min(mthly_change)]
+rel_date = ["","","",maxdate,mindate]
+# zip answers together
+answers = zip(stats, solutions, rel_date)
+# use for loop to create report list in which each zipped detail is its own sublist
+report = []
+for x in answers:
+	report.append(x)
+
+# develop output path to write analysis.txt in the Analysis folder
+output_path = os.path.join("Analysis","analysis.txt")
+
+# open the output file in write mode
+with open(output_path, "w", newline = '') as datafile:
+	writer = csv.writer(datafile)
+# create header row
+	writer.writerow(['Statistic','Amount','Month, if applicable'])
+# write file with each answer on its own line
+	writer.writerows(report)
