@@ -20,7 +20,7 @@ with open(csvfile) as budgfile:
 	first_mo = 0
 	revenue = []
 	dates = []
-	comp_col = []
+	
 	for row in budgfile:
 		# loops through second column in CSV and adds each amount
 		tot_prof = tot_prof + int(row[1])
@@ -30,7 +30,7 @@ with open(csvfile) as budgfile:
 		#else: break
 		revenue.append(int(row[1]))
 		dates.append(row[0])
-		comp_col.append(int(row[1]))
+		
 
 	# average change is:
 	# (last month revenue - first month revenue)/(mos - 1)
@@ -38,7 +38,7 @@ with open(csvfile) as budgfile:
 	last_mo = int(revenue[-1])
 	avg_change = ((last_mo - first_mo)/(mo_count-1))
 	revsht = revenue[1:]
-	compsht = comp_col[0:-1]
+	compsht = revenue[0:-1]
 	combine = zip(revsht, compsht)
 	combine_list = []
 	for x , y in combine:
@@ -56,7 +56,7 @@ with open(csvfile) as budgfile:
 	maxdatedex = dates[maxchgdex]
 	mindatedex = dates[minchgdex]
 	
-	print(mindatedex)
+	print(combine_list)
 	# print(revenue[1:])
 	# print(comp_col[0:-1])
 	# for x in revenue:
