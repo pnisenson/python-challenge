@@ -27,20 +27,27 @@ with open(csvfile) as budgfile:
 		# if function that if the cell in the first column isn't blank, count and add to month count
 		if row[0] != "":
 			mo_count = mo_count + 1
-		else: break
-		revenue.append(row[1])
+		#else: break
+		revenue.append(int(row[1]))
 		dates.append(row[0])
-		comp_col.append(row[1])
+		comp_col.append(int(row[1]))
+
 	# average change is:
 	# (last month revenue - first month revenue)/(mos - 1)
 	first_mo = int(revenue[0])
 	last_mo = int(revenue[-1])
 	avg_change = ((last_mo - first_mo)/(mo_count-1))
-	#comp_col.append((revenue[0]))
-	#comp_col.append(revenue)
+	revsht = revenue[1:]
+	compsht = comp_col[0:-1]
+	combine = zip(revsht, compsht)
+	combine_list = []
+	for x , y in combine:
+		combine_list.append(x-y)
+	#mo_change = [revenue[1:])-int(comp_col[0:-1])]
 	
-	print((revenue[1:]))
-	print(comp_col[0:-1])
+	print(index(max(combine_list)))
+	# print(revenue[1:])
+	# print(comp_col[0:-1])
 	# for x in revenue:
 	# 	print(f'{x}')
 
@@ -59,4 +66,20 @@ with open(csvfile) as budgfile:
 	print(f'Total Months: {mo_count}')
 	print(f'Total: ${tot_prof}')
 	print(f'Average Change: ${int(avg_change)}')
-	#print(f'Greatest Increas: ${int(month_chg)}')
+	print(f'Greatest Increase: ${max(combine_list)}')
+	print(f'Greatest Decrease: ${min(combine_list)}')
+
+
+# #to combine lists and subtract
+# combo_list = []
+# list1 = [1,2,3]
+# list2 = [10,15,20]
+# combo = zip(list1,list2)
+# print(combo)
+# for x , y in combo:
+# 	print(x - y)
+# 	combo_list.append(x -y)
+# print(combo_list)
+# #print max and min
+# print(max(combo_list))
+# print(min(combo_list))
