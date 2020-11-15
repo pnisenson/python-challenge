@@ -1,11 +1,11 @@
+# import libraries
 import os
 import csv
 
-
-#identify csv file
+# identify csv file to use
 csvfile = os.path.join('Resources','budget_data.csv')
 
-
+# apply csv reader to file and identify header row
 with open(csvfile) as budgfile:
 	budgfile = csv.reader(budgfile, delimiter = ",")
 	csvheader = next(budgfile)
@@ -17,40 +17,52 @@ with open(csvfile) as budgfile:
 # average change is:
 	# (last month revenue - first month revenue)/(mos - 1)
 	
-	
+	first_mo = 0
 	revenue = []
 	dates = []
+	comp_col = []
 	for row in budgfile:
 		# loops through second column in CSV and adds each amount
 		tot_prof = tot_prof + int(row[1])
 		# if function that if the cell in the first column isn't blank, count and add to month count
 		if row[0] != "":
 			mo_count = mo_count + 1
-		else: break
-		revenue.append(row[1])
+		#else: break
+		revenue.append(int(row[1]))
 		dates.append(row[0])
+		comp_col.append(int(row[1]))
+
 	# average change is:
 	# (last month revenue - first month revenue)/(mos - 1)
 	first_mo = int(revenue[0])
 	last_mo = int(revenue[-1])
 	avg_change = ((last_mo - first_mo)/(mo_count-1))
-	
-	for x in revenue:
-		print(f'{x}')
+	revsht = revenue[1:]
+	compsht = comp_col[0:-1]
+	combine = zip(revsht, compsht)
+	combine_list = []
+	for x , y in combine:
+		combine_list.append(x-y)
+	#mo_change = [revenue[1:])-int(comp_col[0:-1])]
+	for x in combine_list:
+		maxchgdex = combine_list.index(x) + 1
+		if x == max(combine_list):
+			break
+	for x in combine_list:
+		minchgdex = combine_list.index(x) + 1
+		if x == min(combine_list):
+			break
 
-	# for x in budgfile:
-	# 	if x[1] != "":
-	# 		first_mo = first_mo + int(x[1])
-	# 	else: first_mo = first_mo + 2000
-
-			
+	maxdatedex = dates[maxchgdex]
+	mindatedex = dates[minchgdex]
 			
 		
 
-	
+# print all required variables as Data Table
 	print("Financial Analysis")
 	print("----------------------")
 	print(f'Total Months: {mo_count}')
 	print(f'Total: ${tot_prof}')
-	print(f'Average Change: ${int(avg_change)}')
-	#print(f'Greatest Increas: ${int(month_chg)}')
+	print(f'Average Change: ${round(avg_change, 2)}')
+	print(f'Greatest Increase: {maxdatedex} (${max(combine_list)})')
+	print(f'Greatest Decrease: {mindatedex} (${min(combine_list)})')

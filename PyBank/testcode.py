@@ -44,8 +44,19 @@ with open(csvfile) as budgfile:
 	for x , y in combine:
 		combine_list.append(x-y)
 	#mo_change = [revenue[1:])-int(comp_col[0:-1])]
+	for x in combine_list:
+		maxchgdex = combine_list.index(x) + 1
+		if x == max(combine_list):
+			break
+	for x in combine_list:
+		minchgdex = combine_list.index(x) + 1
+		if x == min(combine_list):
+			break
+
+	maxdatedex = dates[maxchgdex]
+	mindatedex = dates[minchgdex]
 	
-	print(index(max(combine_list)))
+	print(mindatedex)
 	# print(revenue[1:])
 	# print(comp_col[0:-1])
 	# for x in revenue:
@@ -65,9 +76,9 @@ with open(csvfile) as budgfile:
 	print("----------------------")
 	print(f'Total Months: {mo_count}')
 	print(f'Total: ${tot_prof}')
-	print(f'Average Change: ${int(avg_change)}')
-	print(f'Greatest Increase: ${max(combine_list)}')
-	print(f'Greatest Decrease: ${min(combine_list)}')
+	print(f'Average Change: ${round(avg_change, 2)}')
+	print(f'Greatest Increase: {maxdatedex} (${max(combine_list)})')
+	print(f'Greatest Decrease: {mindatedex} (${min(combine_list)})')
 
 
 # #to combine lists and subtract
