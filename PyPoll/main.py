@@ -10,27 +10,26 @@ with open(csvfile) as budgfile:
 	budgfile = csv.reader(budgfile, delimiter = ",")
 	csvheader = next(budgfile)
 
-	
-	voterid = []
-	county = []
+# define Candidate lists to use for calculation and finding amounts
 	candidate = []
 
+# loop through Candidate row in CSV and add all values to Candidate list
 	for row in budgfile:
-		voterid.append(row[0])
-		county.append(row[1])
 		candidate.append(row[2])
 
-	vote_count = len(voterid)
+# obtain total votes by counting the length of the list
+	vote_count = len(candidate)
+# use list comprehensions to search for each candidate in the candidate list and count the how many votes by candidate using len
 	khan_votes = len([x for x in candidate if x == "Khan"])
 	correy_votes = len([x for x in candidate if x == "Correy"])
 	li_votes = len([x for x in candidate if x == "Li"])
 	otooley_votes = len([x for x in candidate if x == "O'Tooley"])
+# calculate percentage of votes by candidate
 	khan_perc = round((khan_votes/vote_count)*100, 3)
 	correy_perc = round((correy_votes/vote_count)*100, 3)
 	li_perc = round((li_votes/vote_count)*100, 3)
-	otooley_perc = round((otooley_votes/vote_count)*100, 3)
-	
-# if statemets
+	otooley_perc = round((otooley_votes/vote_count)*100, 3)	
+# if statements to declare the winner of the election depending on who has the most votes
 	if khan_votes > correy_votes and li_votes and otooley_votes:
 		winner = "Khan"
 	if correy_votes > khan_votes and li_votes and otooley_votes:
@@ -40,7 +39,7 @@ with open(csvfile) as budgfile:
 	if otooley_votes > khan_votes and correy_votes and li_votes:
 			winner = "O'Tooley"
 
-	# print all required variables as Data Table
+# print all required variables as Data Table
 	print("Election Results")
 	print("----------------------")
 	print(f'Total Votes: {vote_count}')
@@ -52,10 +51,10 @@ with open(csvfile) as budgfile:
 	print("----------------------")
 	print(f'Winner: {winner}')
 
-# create lists of outputs to write to file
+# create lists of candidate data outputs to write to file
 	candidates = ['Khan','Correy','Li',"O'Tooley"]
 	votes_by_cand = [khan_votes,correy_votes,li_votes,otooley_votes]
-	voteperc_by_cand = [khan_perc,correy_perc,li_perc,otooley_perc]
+	voteperc_by_cand = [f'{khan_perc}%',f'{correy_perc}%',f'{li_perc}%',f'{otooley_perc}%']
 
 # zip candidate data together
 	cand_data = zip(candidates, voteperc_by_cand, votes_by_cand)
@@ -72,13 +71,16 @@ output_path = os.path.join("Analysis","analysis.txt")
 with open(output_path, "w", newline = '') as datafile:
 	writer = csv.writer(datafile)
 # create header row
-	writer.writerow(['Candidate',"'%'' of Votes",'Votes'])
-# write file with each answer on its own line
+	writer.writerow(['Candidate', f'% of Votes','Votes'])
+# write file with each candidate's data on its own line
 	writer.writerows(report)
-# create header row
+# create row displaying total votes
 	writer.writerow(['Total Votes:','',vote_count])
-# create header row
-	writer.writerow(['Winner:','',winner])
+# create blank row
+	writer.writerow([])
+# create last row with winning candidate info
+	writer.writerow([f'Winner: {winner}'])
+
 
 
 
