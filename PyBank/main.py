@@ -14,15 +14,15 @@ with open(csvfile) as budgfile:
 	revenue = []
 	dates = []
 	
-# open loop to read csv file and: 1)add total profit 2)count months 3)transfer columns to lists
+# open loop to read csv file and transfer columns to lists
 	for row in budgfile:
-		# add column A of CSV to Dates list and column B of CSV to Revenue and Comparison Column lists
+		# add column A of CSV to Dates list and column B of CSV to Revenue list
 		revenue.append(int(row[1]))
 		dates.append(row[0])
 
 # create variable to sum profits and losses
 	tot_prof = sum(revenue)
-# create variable to count the rows of CSV, with each row being a unique month
+# create variable to count the length of dates list, which is the amount of months
 	mo_count = len(dates)
 # identify profit/loss in first month of CSV and define as 'first_mo'
 	first_mo = int(revenue[0])

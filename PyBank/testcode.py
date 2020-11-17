@@ -18,9 +18,9 @@ with open(csvfile) as budgfile:
 	revenue = []
 	dates = []
 	
-# open loop to read csv file and: 1)add total profit 2)count months 3)transfer columns to lists
+# open loop to read csv file and transfer columns to lists
 	for row in budgfile:
-		# add column A of CSV to Dates list and column B of CSV to Revenue and Comparison Column lists
+		# add column A of CSV to Dates list and column B of CSV to Revenue
 		revenue.append(int(row[1]))
 		dates.append(row[0])
 
