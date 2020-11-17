@@ -10,28 +10,20 @@ with open(csvfile) as budgfile:
 	budgfile = csv.reader(budgfile, delimiter = ",")
 	csvheader = next(budgfile)
 
-# create variable to sum profits and losses
-	tot_prof = 0
-# create variable to count the rows of CSV, with each row being a unique month
-	mo_count = 0
-# average change is:
-	# (last month revenue - first month revenue)/(mos - 1)
-
 # define lists to use for calculation and finding amounts: Revenue and Dates	
 	revenue = []
 	dates = []
 	
 # open loop to read csv file and: 1)add total profit 2)count months 3)transfer columns to lists
 	for row in budgfile:
-		# loops through second column in CSV and adds each amount
-		tot_prof = tot_prof + int(row[1])
-		# if function that if the cell in the first column isn't blank, count and add to month count
-		if row[0] != "":
-			mo_count = mo_count + 1
 		# add column A of CSV to Dates list and column B of CSV to Revenue and Comparison Column lists
 		revenue.append(int(row[1]))
 		dates.append(row[0])
 
+# create variable to sum profits and losses
+	tot_prof = sum(revenue)
+# create variable to count the rows of CSV, with each row being a unique month
+	mo_count = len(dates)
 # identify profit/loss in first month of CSV and define as 'first_mo'
 	first_mo = int(revenue[0])
 # identify profit/loss in last month of CSV and define as 'last_mo'
@@ -69,10 +61,10 @@ with open(csvfile) as budgfile:
 	print("Financial Analysis")
 	print("----------------------")
 	print(f'Total Months: {mo_count}')
-	print(f'Total: ${tot_prof}')
-	print(f'Average Change: ${round(avg_change, 2)}')
-	print(f'Greatest Increase: {maxdate} (${max(mthly_change)})')
-	print(f'Greatest Decrease: {mindate} (${min(mthly_change)})')
+	print(f'Total: ${tot_prof:,}')
+	print(f'Average Change: ${round(avg_change, 2):,}')
+	print(f'Greatest Increase: {maxdate} (${max(mthly_change):,})')
+	print(f'Greatest Decrease: {mindate} (${min(mthly_change):,})')
 
 # create list of outputs to write to file
 stats = ['Total Months','Total Profits/Losses','Average Change','Greatest Increase','Greatest Decrease']
